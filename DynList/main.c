@@ -252,6 +252,27 @@ int main() {
         printPerson(DL_get(cp, i));
     }
 
+    printf("--- Removing ---\n");
+    printf("Removed ID 55 from full list:\n");
+    DL_remove(pdl2, &p8);
+    for (int i = 0; i < DL_size(pdl2); i++) {
+        printPerson(DL_get(pdl2, i));
+    }
+    printf("again...:\n");
+    DL_remove(pdl2, &p8);
+    for (int i = 0; i < DL_size(pdl2); i++) {
+        printPerson(DL_get(pdl2, i));
+    }
+    printf("And again...:\n");
+    DL_remove(pdl2, &p8);
+    for (int i = 0; i < DL_size(pdl2); i++) {
+        printPerson(DL_get(pdl2, i));
+    }
+
+
+
+    DL_free(cp);
+
     printf("All good!\n");
     return EXIT_SUCCESS;
 }

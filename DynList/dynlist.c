@@ -489,3 +489,48 @@ int DL_sort(DynList *dl) {
 
     return 0;
 }
+
+/**
+* `DL_remove` removes the first ocurrence of `elem` from `dl`.
+* returns 0 on success, -1 otherwise.
+*/
+int DL_remove(DynList *dl, void *elem) {
+    if (dl == NULL) {
+        fprintf(stderr, "DL_remove error: provided DynList is NULL.\n");
+        return -1;
+    }
+
+    // find index of first occurrence.
+    int index = -1;
+    for (int i = 0; i < dl->size; i++) {
+        if (dl->compare_to(DL_get(dl, i), elem) == 0) {
+            index = i;
+            break;
+        }
+    }
+
+    // elem is not in dl
+    if (index == -1) {
+        return 0;
+    }
+
+    // elem is last item in dl
+    if (index == dl->size - 1) {
+        dl->size--;
+        return 0;
+    }
+
+    // shift items to the left
+    void *dst = memmove(dl->data + dl->stride * index, 
+                        dl->data + dl->stride * (index + 1), 
+                        dl->stride * (dl->size - index));
+    if (dst == NULL) {
+        fprintf(stderr, "DL_remove error: moving of data failed.\n");
+        return -1;
+    }
+
+    // update size
+    dl->size--;
+
+    return 0;
+}

@@ -35,6 +35,6 @@ int DL_contains(DynList *dl, void *elem);
 int DL_index(DynList *dl, void *elem);
 int DL_sort(DynList *dl);
 DynList *DL_copy(DynList *dl, int start, int end);
-
+int DL_remove(DynList *dl, void *elem);
 
 #endif // DYNLIST_H
