@@ -1,18 +1,31 @@
 CC=gcc
-CFLAGS=-Wall -g
+CFLAGS=-Wall -g -fPIC
+LDFLAGS=-shared
 BINS=librarytest libdynlist.so
-
+LIBNAME=dynlist
+PREFIX=/usr
+INCLUDEDIR=$(PREFIX)/include
+LIBDIR=$(PREFIX)/lib
 
 all: $(BINS)
 
-libdynlist.o: dynlist.c dynlist.h
-	$(CC) $(CFLAGS) -c dynlist.c
+libdynlist.o: dynlist.c dynlist.h 
+	$(CC) $(CFLAGS) -c dynlist.c -o libdynlist.o
 
-libdynlist.so: dynlist.o dynlist.h
-	$(CC) $(CFLAGS) -fPIC -shared -o $@ dynlist.c -lc
+libdynlist.so: libdynlist.o 
+	$(CC) $(LDFLAGS) -o $@ $< -lc
 
-librarytest: main.c dynlist.o
+librarytest: main.c libdynlist.o 
 	$(CC) $(CFLAGS) -o $@ $^
 
-clean:
-	rm *.o $(BINS)
+install: libdynlist.so dynlist.h
+	install -d $(INCLUDEDIR)
+	install -m 644 dynlist.h $(INCLUDEDIR)
+	install -d $(LIBDIR)
+	install -m 755 libdynlist.so $(LIBDIR)
+	ldconfig
+
+clean: 
+	rm -f *.o $(BINS)
+
+.PHONY: all install clean
