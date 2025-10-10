@@ -12,11 +12,16 @@ It's designed to mimic Pythons `list`.
 A `DynList` is structured as follows:
 ```C
 typedef struct DynList {
-    char    *data;    // A Pointer to the data being stored on the heap.
-    size_t  capacity; // Number of elements that can be stored (memory allocated thus far).
-    size_t  size;     // Number of elements stored in the list thus far.
-    size_t  stride;   // Number of bytes each element needs.
-    int     (*compare_to)(void *elem1, void *elem2); // A function pointer in order to compare two elements for searching etc..
+    // A Pointer to the data being stored on the heap.
+    char *data;
+    // Number of elements that can be stored (memory allocated thus far).
+    size_t capacity;
+    // Number of elements stored in the list thus far.
+    size_t size;
+    // Number of bytes each element needs.
+    size_t stride;
+    // A function pointer in order to compare two elements for searching etc..
+    int (*compare_to)(void *elem1, void *elem2);
 } DynList;
 ```
 
