@@ -46,11 +46,14 @@ typedef struct DynList {
 - **DL_remove(dl, elem)**: Remove an element from the DynList (`compare_to` function must be given).
 
 ## Installation
-(TODO)
+The `DynList` can be installed to the system by putting the header file `dynlist.h` into `/usr/include/` and the compiled `libdynlist.so` file into `/usr/lib/`.
+This can be done by using the `Makefile` as such:
+```Bash
+sudo make install
+```
+Permissions can be adjusted as desired beforehand in the `Makefile`.
 
 ## Usage Example
-(TODO)
-
 ```C
 #include <stdio.h>
 #include <stdlib.h>
