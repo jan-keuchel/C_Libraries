@@ -51,5 +51,135 @@ typedef struct DynList {
 ## Usage Example
 (TODO)
 
-## License
-(TODO)
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <dynlist.h>
+
+typedef struct {
+    int id;
+    int age;
+    float height;
+} person_t;
+
+void print_person(person_t *p) {
+    printf("Person Info:\n");
+    printf("ID:      %d\n", p->id);
+    printf("Age:     %d\n", p->age);
+    printf("Height:  %.2f cm\n", p->height);  
+}
+
+/**
+* `compare_people` returns...
+* `x < 0` iff a < b <=> a.id < b.id
+* `x = 0` iff a = b <=> a.id = b.id
+* `x > 0` iff a > b <=> a.id > b.id
+*/
+int compare_people(void *a, void *b) {
+    return (((person_t *)a)->id - ((person_t *)b)->id);
+}
+
+int main() {
+
+    // ----- Using the `Person` struct -----
+    // Create the new DynList with initial capacity of 2
+    DynList *people = DL_create(2, sizeof(person_t), compare_people);
+
+    // Some new people:
+    person_t p1 = {
+        .id = 0,
+        .age = 22,
+        .height = 1.80f
+    };
+    person_t p2 = {
+        .id = 1,
+        .age = 42,
+        .height = 1.84f
+    };
+    person_t p3 = {
+        .id = 2,
+        .age = 12,
+        .height = 1.40f
+    };
+    person_t p4 = {
+        .id = 3,
+        .age = 82,
+        .height = 1.76f
+    };
+
+    // Add people to the list
+    DL_append(people, &p3);
+    DL_append(people, &p1);
+    DL_append(people, &p4);
+    DL_append(people, &p2);
+
+    // Print the list
+    for (int i = 0; i < DL_size(people); i++) {
+        print_person(DL_get(people, i));
+        printf("---------------------------\n");
+    }
+
+    // Sort the list based on the function pointer
+    DL_sort(people);
+
+    // Print again
+    for (int i = 0; i < DL_size(people); i++) {
+        print_person(DL_get(people, i));
+        printf("---------------------------\n");
+    }
+
+    // Free DynList
+    DL_free(people);
+
+    return EXIT_SUCCESS;
+}
+```
+
+**Output of the first print:**
+```Bash
+Person Info:
+ID:      2
+Age:     12
+Height:  1.40 cm
+---------------------------
+Person Info:
+ID:      0
+Age:     22
+Height:  1.80 cm
+---------------------------
+Person Info:
+ID:      3
+Age:     82
+Height:  1.76 cm
+---------------------------
+Person Info:
+ID:      1
+Age:     42
+Height:  1.84 cm
+---------------------------
+```
+
+**Output of the second print:**
+```Bash
+Person Info:
+ID:      0
+Age:     22
+Height:  1.80 cm
+---------------------------
+Person Info:
+ID:      1
+Age:     42
+Height:  1.84 cm
+---------------------------
+Person Info:
+ID:      2
+Age:     12
+Height:  1.40 cm
+---------------------------
+Person Info:
+ID:      3
+Age:     82
+Height:  1.76 cm
+---------------------------
+```
