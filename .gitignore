@@ -2,5 +2,5 @@
 */*.so
 DynList/test
 DynList/librarytest
-BBST/test
+BBST/debug
 BBST/librarytest
