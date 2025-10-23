@@ -11,6 +11,7 @@
 typedef struct node_t {
     // Pointer to the data being stored in the specific node.
     void *data;
+    size_t stride;
     // Pointer to children.
     struct node_t *left;
     struct node_t *right;
@@ -21,10 +22,13 @@ typedef struct node_t {
 } node_t;
 
 typedef struct {
-    size_t stride;
     node_t *root;
+    size_t stride;
+    int (*compare_to)(void *elem1, void *elem2);
 } BBST;
 
-BBST *BBST_create(size_t capacity, int (*compare_to)(void *elem1, void *elem2));
+BBST *BBST_create(size_t stride, int (*compare_to)(void *elem1, void *elem2));
+void BBST_free(BBST *bbst);
+int BBST_insert(BBST *bbst, void *data);
 
 #endif
