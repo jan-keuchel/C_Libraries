@@ -18,6 +18,12 @@ libbbst.so: libbbst.o
 librarytest: main.c libbbst.o 
 	$(CC) $(CFLAGS) -o $@ $^
 
+debug: main.c libbbst.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+runvalgrind: debug
+	valgrind --leak-check=full --show-leak-kinds=definite ./debug
+
 install: libbbst.so bbst.h
 	install -d $(INCLUDEDIR)
 	install -m 644 bbst.h $(INCLUDEDIR)
