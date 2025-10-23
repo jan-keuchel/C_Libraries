@@ -103,6 +103,40 @@ node_t *node_insert(node_t *current,
     return current;
 }
 
+node_t *ror(node_t *n) {
+    if (n == NULL) {
+        fprintf(stderr, "ror was given empty node.\n");
+        return NULL;
+    }
+    if (n->left == NULL) {
+        fprintf(stderr, "ror was given node with no left child.\n");
+        return NULL;
+    }
+
+    node_t *l_temp = n->left;
+    n->left = n->left->right;
+    l_temp->right = n;
+
+    return l_temp;
+}
+
+node_t *rol(node_t *n) {
+    if (n == NULL) {
+        fprintf(stderr, "rol was given empty node.\n");
+        return NULL;
+    }
+    if (n->right == NULL) {
+        fprintf(stderr, "rol was given node with no right child.\n");
+        return NULL;
+    }
+
+    node_t *r_temp = n->right;
+    n->right = n->right->left;
+    r_temp->left = n;
+
+    return r_temp;
+}
+
 
 BBST *BBST_create(size_t stride, int (*compare_to)(void *elem1, void *elem2)) {
     BBST *bbst = (BBST *)calloc(1, sizeof(BBST));
