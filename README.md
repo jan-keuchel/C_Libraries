@@ -1,6 +1,6 @@
 # C_Libraries
 
-This project contains my implementation some uesefull to have at hand data structures.
+This project contains my implementation of some data structures I frequently use.
 The aim is to implement different data structures in a generic way, such that they can be used in any project.
 
 ## Progress
